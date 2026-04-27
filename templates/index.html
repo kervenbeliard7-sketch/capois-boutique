@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capois Boutique | Boutique 2026</title>
+    <style>
+        :root { --primary: #003366; --accent: #ff0000; --dark: #121212; }
+        body { font-family: sans-serif; background: linear-gradient(135deg, #001f3f 0%, #000 100%); color: #fff; text-align: center; padding: 40px 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
+        .card { background: white; border-radius: 24px; padding: 20px; color: var(--dark); transition: 0.3s; }
+        .card img { width: 100%; height: 300px; object-fit: cover; border-radius: 18px; }
+        .price { font-size: 1.4rem; font-weight: bold; color: var(--primary); margin: 15px 0; }
+        .btn-group { display: flex; flex-direction: column; gap: 10px; }
+        .btn { border: none; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
+        .btn-moncash { background: #ff0000; }
+        .btn-natcash { background: #ff7300; }
+        .btn:hover { opacity: 0.8; transform: scale(1.02); }
+    </style>
+</head>
+<body>
+    <h1>CAPOIS BOUTIQUE</h1>
+    <p>Achte pou fè kè w kontan</p>
+
+    <div class="grid">
+        {% for p in produits %}
+        <div class="card">
+            <img src="{{ url_for('static', filename=p.image) }}" alt="{{ p.nom }}">
+            <h3>{{ p.nom }}</h3>
+            <div class="price">{{ p.pri }}</div>
+            <div class="btn-group">
+                <button class="btn btn-moncash" onclick="window.location.href='/payer/moncash/{{ p.id }}'">Acheter avec MonCash</button>
+                <button class="btn btn-natcash" onclick="window.location.href='/payer/natcash/{{ p.id }}'">Acheter avec Natcash</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
