@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chwazi Kantite</title>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: white; text-align: center; padding: 50px 20px; }
+        .box { background: white; color: black; padding: 30px; border-radius: 20px; max-width: 400px; margin: 0 auto; }
+        select, button { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #ccc; font-weight: bold; }
+        .btn-moncash { background: #ff0000; color: white; border: none; }
+        .btn-natcash { background: #ff7300; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>{{ pwodwi.nom }}</h2>
+        <p>Konbyen w ap kòmande?</p>
+        <form action="/paiement" method="POST">
+            <input type="hidden" name="id" value="{{ pwodwi.id }}">
+            <select name="kantite">
+    {% if pwodwi.min <= 1 %}
+    <option value="1">1 Grenn</option>
+    <option value="2">2 Grenn</option>
+    {% endif %}
+    
+    <option value="3">3 Grenn (Pake minimòm)</option>
+    
+    {% if pwodwi.limit >= 6 %}
+    <option value="6">6 Grenn</option>
+    {% endif %}
+    
+    {% if pwodwi.limit >= 12 %}
+    <option value="12">12 Grenn (Gwo Grossiste)</option>
+    {% endif %}
+</select>
+            <button type="submit" name="metode" value="moncash" class="btn-moncash">Acheter avec MonCash</button>
+            <button type="submit" name="metode" value="natcash" class="btn-natcash">Acheter avec Natcash</button>
+        </form>
+        <a href="/" style="color: #888; text-decoration: none; font-size: 0.8rem;">Anile</a>
+    </div>
+</body>
+</html>

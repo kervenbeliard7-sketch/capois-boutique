@@ -5,35 +5,339 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capois Boutique | Boutique 2026</title>
     <style>
-        :root { --primary: #003366; --accent: #ff0000; --dark: #121212; }
-        body { font-family: sans-serif; background: linear-gradient(135deg, #001f3f 0%, #000 100%); color: #fff; text-align: center; padding: 40px 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
-        .card { background: white; border-radius: 24px; padding: 20px; color: var(--dark); transition: 0.3s; }
-        .card img { width: 100%; height: 300px; object-fit: cover; border-radius: 18px; }
-        .price { font-size: 1.4rem; font-weight: bold; color: var(--primary); margin: 15px 0; }
-        .btn-group { display: flex; flex-direction: column; gap: 10px; }
-        .btn { border: none; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; color: white; transition: 0.3s; }
-        .btn-moncash { background: #ff0000; }
-        .btn-natcash { background: #ff7300; }
-        .btn:hover { opacity: 0.8; transform: scale(1.02); }
+        .main-header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    padding: 10px 0;
+    display: flex;
+    justify-content: flex-start; /* Sa ap pouse tout bagay a gauche */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center; /* Sa ap santre logo a ak tèks la vètikallman */
+    gap: 15px; /* Espas ant logo a ak tèks la */
+}
+
+.site-logo {
+    width: 60px; /* Ou ka ogmante oswa diminye gwosè sa */
+    height: 60px;
+    object-fit: contain;
+    border-radius: 50%; /* Si w vle logo a won, si l kare w ka retire liy sa */
+}
+
+.brand-text {
+    text-align: left;
+}
+
+.brand-text h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.subtitle-top {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #ccc;
+}
+        :root { 
+            --primary: #003366; 
+            --accent: #ff0000; 
+            --dark: #121212; 
+            --gray: #f4f4f4;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #001f3f 0%, #000 100%); 
+            color: #fff; 
+            text-align: center; 
+            margin: 0; 
+            padding: 40px 20px; 
+        }
+
+        h1 { font-size: 2.5rem; letter-spacing: 2px; margin-bottom: 5px; }
+        .subtitle { margin-bottom: 40px; color: #ccc; }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
+        .card { 
+            background: white; 
+            border-radius: 24px; 
+            padding: 20px; 
+            color: var(--dark); 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        /* Lè pwodwi a pa disponib, li vin yon ti jan transparan */
+        .not-available { opacity: 0.6; }
+
+        .badge-out {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* STYLE POU SWIPE FOTO */
+        .swipe-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 10px;
+            border-radius: 18px;
+            scrollbar-width: none;
+            margin-bottom: 10px;
+        }
+        .swipe-container::-webkit-scrollbar { display: none; }
+        
+        .swipe-container img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            border-radius: 15px;
+        }
+
+        .hint { font-size: 0.75rem; color: #888; margin: 5px 0; font-style: italic; }
+
+        h3 { margin: 15px 0 5px 0; font-size: 1.3rem; }
+
+        .price { 
+            font-size: 1.6rem; 
+            font-weight: bold; 
+            color: var(--primary); 
+            margin-bottom: 5px; 
+        }
+
+        .promo-tag { 
+            background: #ffebee; 
+            color: #c62828; 
+            padding: 8px; 
+            border-radius: 10px; 
+            font-size: 0.85rem; 
+            font-weight: bold; 
+            margin-bottom: 20px;
+        }
+
+        /* BOUTON YO */
+        .btn-order { 
+            background: var(--dark); 
+            color: white; 
+            border: none; 
+            padding: 15px 0; 
+            width: 100%; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            text-decoration: none; 
+            display: block; 
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        .btn-order:hover { transform: scale(1.02); background: #333; }
+
+        .btn-disabled {
+            background: #ccc;
+            color: #777;
+            padding: 15px 0;
+            width: 100%;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: not-allowed;
+            border: none;
+        }
+
+        .admin-tool {
+            margin-top: 15px;
+            font-size: 0.75rem;
+            border-top: 1px dashed #ddd;
+            padding-top: 10px;
+        }
+        
+        .admin-link { color: blue; text-decoration: none; font-weight: bold; }
+        /* Bouton WhatsApp Flotan */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    z-index: 100;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    background-color: #128c7e;
+}
+
+/* Ti meni ki ouvri pou 2 nimewo yo */
+.whatsapp-menu {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 101;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.whatsapp-menu a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    font-size: 0.9rem;
+}
+
+.whatsapp-menu a:hover { background: #eee; }
+
     </style>
 </head>
 <body>
-    <h1>CAPOIS BOUTIQUE</h1>
-    <p>Achte pou fè kè w kontan</p>
+
+    <header class="main-header">
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='capois logo.png') }}" alt="Logo" class="site-logo">
+        <div class="brand-text">
+            <h1>CAPOIS BOUTIQUE</h1>
+            <p> <class="subtitle-top">Ekri sou WHATSAPP pou pri livrezon pwodwi an avanw achte.</p>
+                <h2>Se an goud chif yo gwo, ni mwen ni ou konnen yo pa anpil kòb vre.</h2>
+        </div>
+        <div id="visitor-counter" style="background: rgba(255, 255, 255, 0.1); color: #00ff00; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 20px; font-weight: bold; border: 1px solid #00ff00;">
+    🟢 <span id="count">60</span> visiteur (e)(s)
+</div>
+    </div>
+</header>
 
     <div class="grid">
         {% for p in produits %}
-        <div class="card">
-            <img src="{{ url_for('static', filename=p.image) }}" alt="{{ p.nom }}">
+        <div class="card {% if not p.disponible %}not-available{% endif %}">
+            
+            {% if not p.disponible %}
+            <div class="badge-out">NON DISPONIBLE</div>
+            {% endif %}
+
+            <div class="swipe-container">
+                {% for img_name in p.images %}
+                <img src="{{ url_for('static', filename=img_name) }}" alt="{{ p.nom }}">
+                {% endfor %}
+            </div>
+            
+            {% if p.images|length > 1 %}
+            <p class="hint">👈 Glise pou wè lòt yo 👉</p>
+            {% endif %}
+
             <h3>{{ p.nom }}</h3>
             <div class="price">{{ p.pri }}</div>
-            <div class="btn-group">
-                <button class="btn btn-moncash" onclick="window.location.href='/payer/moncash/{{ p.id }}'">Acheter avec MonCash</button>
-                <button class="btn btn-natcash" onclick="window.location.href='/payer/natcash/{{ p.id }}'">Acheter avec Natcash</button>
-            </div>
+            <div class="promo-tag">{{ p.promo }}</div>
+
+            {% if p.disponible %}
+                <a href="/commander/{{ p.id }}" class="btn-order">COMMANDER</a>
+            {% else %}
+                <button class="btn-disabled">EN RUPTURE</button>
+                
+                <div class="admin-tool">
+                    <p style="margin:0">Mèt sit: Pwodwi sa fini.</p>
+                    <a href="#" class="admin-link">Mete l disponib ankò</a>
+                </div>
+            {% endif %}
+
         </div>
         {% endfor %}
+        <div id="wa-menu" class="whatsapp-menu">
+    <p style="color: #333; font-size: 0.8rem; margin: 5px;">Chwazi yon ajan:</p>
+    <a href="https://wa.me/50941047630?text=Bonjou,%20mwen%20bezwen%20enfòmasyon%20sou%20livrezon." target="_blank">Ajan 1 (Livrezon)</a>
+    <a href="https://wa.me/50937858153?text=Bonjou,%20mwen%20bezwen%20yon%20enfòmasyon." target="_blank">Ajan 2 (Sèvis Kliyan)</a>
+</div>
+
+<a href="javascript:void(0);" class="whatsapp-float" onclick="toggleWhatsApp()">
+    <span>WhatsApp</span>
+</a>
+
+<script>
+    function toggleWhatsApp() {
+        var menu = document.getElementById("wa-menu");
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+    // Fonksyon pou jere kontè a
+    function updateCounter() {
+        // Nou tcheke si nou te deja gen yon chif nan memwa navigatè a
+        let count = localStorage.getItem('visitorCount');
+
+        if (!count) {
+            // Si se premye fwa, nou kòmanse nan 60
+            count = 60;
+        } else {
+            // Sinon, nou moute chif la pa 1
+            count = parseInt(count) + 1;
+        }
+
+        // Nou sove nouvo chif la nan memwa navigatè a
+        localStorage.setItem('visitorCount', count);
+
+        // Nou afiche l sou ekran an
+        document.getElementById('count').innerText = count;
+    }
+
+    // Nou deklanche fonksyon an depi paj la fin chaje
+    window.onload = function() {
+        updateCounter();
+        
+        // TI BONUS: Pou fè l parèt pi reyèl, n ap fè l moute tanzantan
+        setInterval(function() {
+            let current = parseInt(document.getElementById('count').innerText);
+            let randomAdd = Math.floor(Math.random() * 2); // Li ka moute 0 oswa 1
+            let newCount = current + randomAdd;
+            document.getElementById('count').innerText = newCount;
+            localStorage.setItem('visitorCount', newCount);
+        }, 60000); // Chak 60 segonn l ap chanje yon ti kras
+    };
+</script>
+</script>
     </div>
+
 </body>
 </html>
